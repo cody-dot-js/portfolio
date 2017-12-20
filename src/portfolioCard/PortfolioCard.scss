@@ -2,9 +2,12 @@
   background-color: #f5f5f5;
 }
 
-.portfolio-card-image {
-  max-height: 480px;
-  width: auto;
+.portfolio-card-portrait {
+  height: 70vh;
   display: table;
   margin: 0 auto;
+}
+
+.portfolio-card-landscape {
+  width: 100%;
 }
