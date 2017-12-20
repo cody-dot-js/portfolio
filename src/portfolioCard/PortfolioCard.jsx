@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from 'terra-card';
+import classNames from 'classnames/bind';
 import ContentContainer from 'terra-content-container';
 import Heading from 'terra-heading';
 import Image from 'terra-image';
 import Spacer from 'terra-spacer';
 import Text from 'terra-text';
-import classNames from 'classnames/bind';
 
 import styles from './PortfolioCard.scss';
 
@@ -14,11 +14,12 @@ const cx = classNames.bind(styles);
 
 const propTypes = {
   title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
+    orientation: PropTypes.oneOf(['portrait', 'landscape']).isRequired,
   }).isRequired,
-  description: PropTypes.string.isRequired,
 };
 
 const defaultProps = {
@@ -40,10 +41,16 @@ const PortfolioCard = ({
   image,
   description,
 }) => {
+  const imageClass = (image.orientation === 'portrait' ?
+    cx('portfolio-card-portrait')
+    :
+    cx('portfolio-card-landscape')
+  );
+
   const hero = (
     <div className={cx('portfolio-card-image-container')}>
       <Image
-        className={cx('portfolio-card-image')}
+        className={imageClass}
         src={image.src}
         alt={image.alt}
       />
@@ -67,12 +74,14 @@ const PortfolioCard = ({
   );
 
   return (
-    <Card>
-      {hero}
-      <Spacer {...contentSpacing}>
-        {content}
-      </Spacer>
-    </Card>
+    <div style={{ maxHeight: '768px' }}>
+      <Card>
+        {hero}
+        <Spacer {...contentSpacing}>
+          {content}
+        </Spacer>
+      </Card>
+    </div>
   );
 };
 
